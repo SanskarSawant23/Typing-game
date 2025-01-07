@@ -4,8 +4,8 @@ import  Word from './Word';
 import Timer from './Timer';
 export const Type = () => {
 
-  const getWord = () => `Serenity tranquility harmony resilience serendipity luminous azure enchantment idyllic meander 
-  crystalline symmetry radiance ethereal flourish whisper vibrant symphony glisten embrace.`.split(' ')
+const getWord = () => `Serenity tranquility harmony resilience serendipity luminous azure enchantment idyllic meander 
+crystalline symmetry radiance ethereal flourish whisper vibrant symphony glisten embrace.`.split(' ')
                 
 
 
@@ -14,21 +14,38 @@ export const Type = () => {
   const[activewordIndex, setActivewordIndex] = useState(0);
   const [correctWordArray, setCorrectWordArray] = useState([]);// initially empty
   const [count, setCount] = useState(false);
-
+  const [button, setButton] = useState(false);
 
   
 
   const onChange =(value)=>{
-     setCount(true)
+   if(activewordIndex === word.current.length){
+      return
+   }
+     if(!count){
+        setCount(true);
+     }
+     
      if(value.endsWith(' ')){
+
+      if(activewordIndex === word.current.length-1){
+         setCount(false)
+         setInputvalue("Game Completed")
+         setButton(true);
+         
+     }else{
+         setInputvalue('');
+     }
+
         setActivewordIndex(index => index+1); //the varialbe used can be of anyname, since the value that manupulates is same only.
-        setInputvalue('');
+        
 
         const typedword = value.trim()// removes the white spaces from the string.
         
             setCorrectWordArray(data => {
                const newResult = [...data]
                newResult[activewordIndex] = typedword === word.current[activewordIndex]
+
                return newResult
             })
         
@@ -37,7 +54,12 @@ export const Type = () => {
         setInputvalue(value);
      }
   }
-  console.log(" correct word length",correctWordArray.filter(Boolean).length)
+  const onclickhandler = ()=> {
+         console.log("inside button")
+         setInputvalue('');
+         setCount(true)
+
+  }
   return(
     <>
     <div>
@@ -55,9 +77,11 @@ export const Type = () => {
             />
        })}</p>
     <input type="text"
+    
     value={inputvalue}
     onChange={((e)=>onChange(e.target.value))}
     />
+   {button?<button onClick={onclickhandler}>Reset</button>: <span></span>}
 
     </div>
       
