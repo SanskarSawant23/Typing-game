@@ -5,11 +5,11 @@ import Timer from './Timer';
 export const Type = () => {
 
 const getWord = () => `Serenity tranquility harmony resilience serendipity luminous azure enchantment idyllic meander 
-crystalline symmetry radiance ethereal flourish whisper vibrant symphony glisten embrace.`.split(' ')
+crystalline symmetry radiance ethereal flourish whisper vibrant symphony glisten embrace.`.split(' ') //this return the array of these words.
                 
 
 
-  const word = useRef(getWord()); //created once presists across renders.
+  const word = useRef(getWord()); //created once and presists across renders.
   const[inputvalue, setInputvalue] = useState('');
   const[activewordIndex, setActivewordIndex] = useState(0);
   const [correctWordArray, setCorrectWordArray] = useState([]);// initially empty
@@ -57,7 +57,13 @@ crystalline symmetry radiance ethereal flourish whisper vibrant symphony glisten
   const onclickhandler = ()=> {
          console.log("inside button")
          setInputvalue('');
-         setCount(true)
+         setCorrectWordArray([])
+         word.current = getWord();
+         
+         setActivewordIndex(0);
+
+         
+          
 
   }
   return(
@@ -68,7 +74,7 @@ crystalline symmetry radiance ethereal flourish whisper vibrant symphony glisten
             correctwords = {correctWordArray.filter(Boolean).length}
      />
       <p>{word.current.map((word, index)=>{
-        
+            
             return <Word 
                text = {word}
                activeword = {index === activewordIndex}

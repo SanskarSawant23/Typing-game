@@ -16,6 +16,7 @@ console.log("timer", startCounting)
     }
     return()=>{
         clearInterval(interval)
+        setTimeElapsed(0);
     }
 
   }, [startCounting])
